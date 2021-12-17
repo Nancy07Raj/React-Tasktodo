@@ -1,18 +1,20 @@
 import React from "react";
 import { Input, Space,Button } from "antd";
 
+
 function Login() {
   const div = {
-    margin: "50px 400px 0",
+    margin: "20px 400px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItem: "center",
     backgroundColor: "white",
+    minHeight: '400px'
   };
   const text = {
     width: "400px",
-    margin: "30px",
+    margin: " 20px 30px",
     padding: "10px",
     border:'1px solid gray'
   };
@@ -21,9 +23,11 @@ function Login() {
       alignItem:'center',
       margin:'20px 20px 0 70px'
   }
+
+
   return (
     <div style={div}>
-      <Input style={text} placeholder="Email" />
+      <Input style={text} type="email" placeholder="Email" />
         <Input.Password style={text} placeholder="input password" />
         <Space direction="horizontal">
         <Button style={btn} type="primary" value="default" htmlType="button">Submit </Button>
@@ -31,6 +35,8 @@ function Login() {
         </Space>
     </div>
   );
+
+  
 }
 
 export default Login;

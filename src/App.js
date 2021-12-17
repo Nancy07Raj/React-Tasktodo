@@ -5,7 +5,6 @@ import Login from "./Login";
 import Signup from "./Signup";
 import {Link} from "react-router-dom";
 import { Layout, Menu } from 'antd';
-import "./App.css"
 import 'antd/dist/antd.css'
 const { Header, Content} = Layout;
 
@@ -22,13 +21,11 @@ function App(){
      </Menu>
       </Header>
       <Content style={{ padding: '0 50px' }}>
-       <div className="site-layout-content">
-       <Switch>
+      <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
       </Switch>
-       </div>
     </Content>
      </Router>
   </Layout>
