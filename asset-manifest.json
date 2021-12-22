@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/React-Tasktodo/static/css/main.b149b59d.css",
-    "main.js": "/React-Tasktodo/static/js/main.55879d45.js",
+    "main.css": "/React-Tasktodo/static/css/main.ac163653.css",
+    "main.js": "/React-Tasktodo/static/js/main.7dda22b6.js",
     "index.html": "/React-Tasktodo/index.html",
-    "main.b149b59d.css.map": "/React-Tasktodo/static/css/main.b149b59d.css.map",
-    "main.55879d45.js.map": "/React-Tasktodo/static/js/main.55879d45.js.map"
+    "main.ac163653.css.map": "/React-Tasktodo/static/css/main.ac163653.css.map",
+    "main.7dda22b6.js.map": "/React-Tasktodo/static/js/main.7dda22b6.js.map"
   },
   "entrypoints": [
-    "static/css/main.b149b59d.css",
-    "static/js/main.55879d45.js"
+    "static/css/main.ac163653.css",
+    "static/js/main.7dda22b6.js"
   ]
 }
