@@ -1,0 +1,28 @@
+.form {
+  margin: 20px 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  min-height: 400px;
+  /* min-width: 800px; */
+}
+#text {
+  width: 400px;
+  margin: 20px 30px;
+  padding: 10px;
+  border: 1px solid gray;
+}
+.btn {
+  width: 100px;
+  margin: 20px 20px 0 70px;
+}
+
+.red {
+  color: red;
+  margin: 0 20px;
+}
+
+.btn-div {
+  margin: 0 50px;
+}
