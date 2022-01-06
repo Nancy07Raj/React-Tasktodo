@@ -1,11 +1,14 @@
 import React from "react";
 import {useHistory} from "react-router-dom";
+import {useDispatch} from 'react-redux'
+import { logout } from "../redux/actionType";
 
 function Logout(){
+    const dispatch =useDispatch();
+    dispatch(logout());
     const history = useHistory();
-    localStorage.clear();
     history.push('/login')
-    window.location.reload(true);
+    return null;
 }
 
 export default Logout;

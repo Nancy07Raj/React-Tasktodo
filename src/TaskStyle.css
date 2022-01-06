@@ -1,20 +1,53 @@
 .div {
-  margin: 20px 200px;
-  min-height: 500px;
-  background-color: burlywood;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 20px 150px;
+  height: auto;
 }
-
-.dueDate,
-.box,
-.priority,
-.type {
-  margin: 30px;
-  width: 300px;
+form {
+  background-color: white;
+  box-shadow: 1px 1px 2px grey;
+}
+.div-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 10px;
+  width: 100%;
+}
+.div-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 10px;
+  width: 100%;
+}
+label {
+  margin-right: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  width: auto;
+  text-align: left;
+}
+p {
+  margin: 0 40px;
 }
 #title,
-#des {
-  margin: 20px 50px;
+#description {
+  width: 75%;
+  margin: 5px 0;
 }
-.btn {
-  margin: 10px 50px;
+.priority,
+.dueDate {
+  width: 200px;
+  margin: 5px 0;
+}
+
+.div-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 200px;
 }

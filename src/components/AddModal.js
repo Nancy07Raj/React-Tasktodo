@@ -1,16 +1,13 @@
 import Modal from 'react-modal';
 import React from 'react';
-// import { Formik } from 'formik';
-// import { Form,Input,SubmitButton,ResetButton } from 'antd'
-import Task from "./Task";
+import TaskRedux from "./TaskRedux";
 
 
-function AddModal({isOpen,setModalOpen}){
-
+function AddModal({isOpen,setModalOpen,id}){
     return(<>
     <Modal isOpen ={isOpen} onRequestClose={()=>setModalOpen(false)}>
     <button onClick={()=> setModalOpen(false)}>X</button>
-    <Task />
+    <TaskRedux Id={id}/>
     </Modal>
     </>)
 

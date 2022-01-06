@@ -1,58 +1,24 @@
-import React, { useEffect, useState } from "react";
-import {useHistory} from "react-router-dom"
-import { Popconfirm,Table, Tag, message } from "antd";
-import {useSelector} from 'react-redux';
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { Popconfirm, Table, Tag } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteTask, getTasks } from "../redux/actionType";
 
-function TaskSchedule() {
-  const [tableData, setTableData] = useState([]);
+function ReduxTaskList() {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const userInfo = useSelector(state => state.userInfo)
-  let config = {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: userInfo.accessToken,
-    },
-  };
+  const userInfo = useSelector((state) => state.userInfo);
+
   useEffect(() => {
-    const abortConst = new AbortController();
-    fetch("https://task-management-rest-app.herokuapp.com/api/tasks", config,{signal: abortConst.signal})
-      .then((res) => {
-        if (!res.ok) {
-          message.error("Server Error");
-          return Promise.reject();
-        } else return res.json();
-      })
-      .then((datas) => {
-        setTableData(datas.data);
-      });
-      return()=> abortConst.abort();
-  },[]);
+    dispatch(getTasks());
+  }, [userInfo]);
 
-  function handleDeleteClick(key){
-  const deleteRecord = tableData.filter(data=> data._id !== key);
-  setTableData(deleteRecord);
-  let deleConfig ={
-    method:'DELETE',
-    headers: {
-      'Content-type': 'application/json',
-      'Authorization' : userInfo.accessToken
-    }
-  };
-  fetch(`https://task-management-rest-app.herokuapp.com/api/tasks/${key}`,deleConfig)
-  .then(res =>{
-    if(!res.ok)
-    {
-      message.error("Server Error");
-      return Promise.reject();
-    }
-    else {
-      message.success("Task Deleted");
-   }
-  })}
+  function handleDeleteClick(key) {
+    dispatch(deleteTask(key));
+  }
 
-  function handleEdit(id){
-     history.push(`/task/${id}`);
+  function handleEdit(id) {
+    history.push(`/taskredux/${id}`);
   }
 
   const Column = [
@@ -135,16 +101,31 @@ function TaskSchedule() {
     {
       title: "Edit",
       key: "edit",
-      render: (text,record) => <a href="#" onClick={()=>handleEdit(record._id)}>Edit</a>,
+      render: (text, record) => (
+        <a href="#" onClick={() => handleEdit(record._id)}>
+          Edit
+        </a>
+      ),
     },
     {
       title: "Delete",
       key: "delete",
-      render: (text,record) =><Popconfirm title='Sure to Delete?' onConfirm={()=>handleDeleteClick(record._id)}> <a href="#">Delete</a></Popconfirm>,
+      render: (text, record) => (
+        <Popconfirm
+          title="Sure to Delete?"
+          onConfirm={() => handleDeleteClick(record._id)}
+        >
+          {" "}
+          <a href="#">Delete</a>
+        </Popconfirm>
+      ),
     },
   ];
 
-  return <Table dataSource={tableData} columns={Column} rowKey={(record)=>record._id} />
+  let data = useSelector((state) => state.fetchdata);
+  return (
+    <Table dataSource={data} columns={Column} rowKey={(record) => record._id} />
+  );
 }
 
-export default TaskSchedule;
+export default ReduxTaskList;

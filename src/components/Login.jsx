@@ -4,9 +4,12 @@ import { Form, Input, SubmitButton, ResetButton } from "formik-antd";
 import * as Yup from "yup";
 import { Space, message } from "antd";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/actionType";
 import "../Home.css";
 
 function Login() {
+  const dispatch = useDispatch();
   let history = useHistory();
 
   const initialValues = {
@@ -19,32 +22,13 @@ function Login() {
   });
 
   function onSubmit(values) {
-    let config = {
-      method: "POST",
-      body: JSON.stringify({
-        email: values.email,
-        password: values.pwd,
-      }),
-      headers: { "content-type": "application/json" },
-    };
-    fetch(
-      "https://task-management-rest-app.herokuapp.com/api/users/login",
-      config
-    )
-      .then((res) => res.json())
-      .then((output) => {
-        console.log(output);
-        let userData = {
-          accessToken: output.data.accessToken,
-          firstName: output.data.firstName,
-          lastName: output.data.lastName,
-          email: output.data.email,
-        };
-        localStorage.setItem("userInfo", JSON.stringify(userData));
-        message.success({ content: "Logged In", duration: 2 });
-        history.push("/task");
-        window.location.reload(true);
-      });
+    const userData ={
+      email: values.email,
+      password: values.pwd
+    }
+    dispatch(login(userData));
+    message.success({ content: "Logged In", duration: 2 });
+    history.push('/taskredux');
   }
 
   return (
@@ -55,9 +39,10 @@ function Login() {
     >
       {(props) => (
         <div className="form">
-          <Form>
+          <Form className="form">
           <Input
             type="email"
+            id="text"
             placeholder="Email"
             name="email"
             value={props.values.email}
@@ -66,8 +51,10 @@ function Login() {
             validate={props.errors.email?"error":"success"}
           />
           {props.touched.email && props.errors.email ? <div className="red">{props.errors.email}</div>:null}
-          <Input.Password
+          <Input
+            type='password'
             placeholder="Password"
+            id='pwd'
             name="pwd"
             value={props.values.pwd}
             onChange={props.handleChange}

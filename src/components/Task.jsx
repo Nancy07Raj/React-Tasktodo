@@ -14,6 +14,7 @@ import {
 import { message, Space } from "antd";
 import * as yup from "yup";
 import "../TaskStyle.css";
+import store from "../redux/store";
 
 const initValues = {
   title: "",
@@ -24,16 +25,19 @@ const initValues = {
   label: "",
 };
 
-function Task() {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+function Task(props) {
+  const userInfo = store.getState().userInfo;
   const [init, setInit] = useState(initValues);
-  const { Id } = useParams();
+  let { Id } = useParams();
   const [selectOption, setSelectOption] = useState(null);
   const [date, setDate] = useState(null);
   const today = new Date();
-  const history = useHistory();
 
-  const validate = yup.object({
+
+  if(props.Id) Id = props.Id;
+
+    const validate = yup.object({
     title: yup.string().required("Required"),
     des: yup.string().required("Required"),
     dueDate: yup.date().min(today).required("DueDate greater than today"),
@@ -41,9 +45,9 @@ function Task() {
     label: yup.array().min(1, "Select atleast one Label"),
     type: yup.number().required("Type Required"),
   });
-  console.log(Id);
 
   useEffect(() => {
+
     if (Id) {
       let config = {
         method: "GET",
@@ -64,7 +68,7 @@ function Task() {
         .then((datas) => {
           setInit({
             title: datas.data.title,
-            des: datas.data.description,
+            description: datas.data.description,
             dueDate: datas.data.dueDate,
             priority: datas.data.priority,
             type: datas.data.type,
@@ -74,7 +78,6 @@ function Task() {
     }
     return () => setInit(initValues);
   }, [Id]);
-  console.log(init);
 
   let options = [
     { label: "Feature", value: 1 },
@@ -92,14 +95,14 @@ function Task() {
   function handleSelectChange(selected) {
     setSelectOption(selected);
   }
-
+  console.log(store.getState().userInfo)
   function handleSubmit(values, { resetForm }) {
     if (Id) {
       let editConfig = {
         method: "PUT",
         body: JSON.stringify({
           title: values.title,
-          description: values.des,
+          description: values.description,
           dueDate: values.dueDate,
           priority: values.priority,
           label: values.label,
@@ -125,14 +128,13 @@ function Task() {
           setDate(null);
           setSelectOption(null);
           setInit(initValues);
-          history.push("/task/:Id");
         });
     } else {
       let Pconfig = {
         method: "POST",
         body: JSON.stringify({
           title: values.title,
-          description: values.des,
+          description: values.description,
           dueDate: values.dueDate,
           priority: values.priority,
           label: values.label,
@@ -167,8 +169,9 @@ function Task() {
     >
       {(props) => (
         <div className="div">
-          <Form>
-            <Space direction="vertical">
+          <Form className="form">
+          <div className="div-horizontal">
+            <label> Title:</label>
               <Input
                 id="title"
                 type="text"
@@ -177,20 +180,28 @@ function Task() {
                 onBlur={props.handleBlur}
                 onChange={props.handleChange}
               />
+              </div>
               {props.touched.title && props.errors.title ? (
                 <p style={{ color: "red" }}>{props.errors.title}</p>
               ) : null}
+              <div className="div-horizontal">
+              <label>Description:</label>
               <Input.TextArea
-                id="des"
-                name="des"
+                id="description"
+                name="description"
                 value={props.values.des}
                 onBlur={props.handleBlur}
                 onChange={props.handleChange}
               />
-              {props.touched.des && props.errors.des ? (
-                <p style={{ color: "red" }}>{props.errors.des}</p>
+              </div>
+              {props.touched.description && props.errors.description ? (
+                <p style={{ color: "red" }}>{props.errors.description}</p>
               ) : null}
-              <Space direction="horizontal">
+
+                <div className="div-horizontal">
+                  <div className='div-vertical'>
+                  <div className="div-horizontal">
+              <label>Due Date:</label>
                 <DatePicker
                   className="dueDate"
                   onChange={(date) => setDate(date)}
@@ -198,25 +209,14 @@ function Task() {
                   name="dueDate"
                   value={date}
                 />
+                </div>
                 {props.touched.dueDate && props.errors.dueDate ? (
                   <p style={{ color: "red" }}>{props.errors.dueDate}</p>
                 ) : null}
-                <Radio.Group
-                  className="type"
-                  values={props.values.type}
-                  onChange={props.handleChange}
-                  name="type"
-                >
-                  <Radio value={1}>Task</Radio>
-                  <Radio value={2}>Story</Radio>
-                  <Radio value={3}>Bug</Radio>
-                </Radio.Group>
-                {props.touched.type && props.errors.type ? (
-                  <p style={{ color: "red" }}>{props.errors.type}</p>
-                ) : null}
-              </Space>
-              <Space direction="horizontal">
-                <Select
+                
+                <div className="div-horizontal">
+                <label>Priority:</label>
+                <Select 
                   className="priority"
                   name="priority"
                   placeholder="Priority"
@@ -228,26 +228,51 @@ function Task() {
                   clearIcon
                   options={selectOptions}
                 ></Select>
+                </div>
                 {props.touched.priority && props.errors.priority ? (
                   <p style={{ color: "red" }}>{props.errors.priority}</p>
                 ) : null}
-                <Checkbox.Group
+                  </div>
+
+                  <div className="div-vertical">
+                  <div className="div-horizontal">
+                <label>Type:</label>
+                <Radio.Group
+                  className="type"
+                  values={props.values.type}
+                  onChange={props.handleChange}
+                  name="type"
+                >
+                  <Radio value={1}>Task</Radio>
+                  <Radio value={2}>Story</Radio>
+                  <Radio value={3}>Bug</Radio>
+                </Radio.Group>
+                </div>
+                {props.touched.type && props.errors.type ? (
+                  <p style={{ color: "red" }}>{props.errors.type}</p>
+                ) : null}
+
+                <div className="div-horizontal">
+                <label>Label:</label>
+                <Checkbox.Group style={{display:'flex', flexDirection:'column'}}
                   className="box"
                   options={options}
                   onChange={props.handleChange}
                   name="label"
                   checked={props.values.label}
                 />
+                </div>
                 {props.touched.label && props.errors.label ? (
                   <p style={{ color: "red" }}>{props.errors.label}</p>
                 ) : null}
-              </Space>
-              <Space direction="horizontal">
+                </div>
+                </div>
+
+                <div className="div-btn">
                 <SubmitButton className="btn">Submit</SubmitButton>
                 <ResetButton className="btn">Reset</ResetButton>
-              </Space>
-            </Space>
-          </Form>
+                </div>
+      </Form>
         </div>
       )}
     </Formik>
