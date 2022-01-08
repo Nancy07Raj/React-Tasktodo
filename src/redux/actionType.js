@@ -2,12 +2,13 @@ import axios from "axios";
 import { message } from "antd";
 import store from "./store";
 
-const accessToken = store.getState().userInfo.accessToken;
+// const accessToken = store.getState().userInfo.accessToken;
+const userInfo = JSON.parse(localStorage.getItem('userInfo'))
 
 let config = {
   headers: {
     "Content-type": "application/json",
-    Authorization: accessToken,
+    Authorization: userInfo.accessToken,
   },
 };
 
@@ -23,6 +24,7 @@ export const login = (data) => {
       )
       .then((res) => {
         console.log(store.getState().userInfo);
+        localStorage.setItem('userInfo',JSON.stringify(res.data.data));
         dispatch(userInfo(res.data.data));
         message.success({ content: "Logged In", duration: 2 });
       })
