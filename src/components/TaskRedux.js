@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Formik } from "formik";
 import { useParams, useHistory } from "react-router-dom";
+import { Row, Col } from "antd";
 import {
   Form,
   Input,
@@ -18,12 +19,12 @@ import { getEditTask, PostTask, putTask } from "../redux/actionType";
 import moment from "moment";
 
 const initValues = {
-  title: "",
-  description: "",
-  dueDate: "",
-  priority: "",
-  type: "",
-  label: "",
+  title: undefined,
+  description: undefined,
+  dueDate: undefined,
+  priority: undefined,
+  type: undefined,
+  label: undefined,
 };
 
 function TaskRedux(props) {
@@ -35,7 +36,7 @@ function TaskRedux(props) {
   const [date, setDate] = useState("");
   const today = new Date();
   let editData = useSelector((state) => state.editData);
-  const userInfo = useSelector((state) => state.userInfo);
+  const userInfom = useSelector((state) => state.userInfom);
 
   if (props.Id) Id = props.Id;
 
@@ -70,7 +71,7 @@ function TaskRedux(props) {
       setSelectOption(editData.priority);
     }
     return () => setInit(initValues);
-  }, [Id, userInfo]);
+  }, [Id, userInfom]);
 
   function handleSelectChange(selected) {
     setSelectOption(selected);
@@ -106,112 +107,131 @@ function TaskRedux(props) {
       validationSchema={validate}
     >
       {(props) => (
-        <div className="div">
-          <Form>
-            <div className="div-horizontal">
-              <label> Title:</label>
-              <Input
-                id="title"
-                type="text"
-                name="title"
-                value={props.values.title}
-                onBlur={props.handleBlur}
-                onChange={props.handleChange}
-              />
-            </div>
-            {props.touched.title && props.errors.title ? (
-              <p style={{ color: "red" }}>{props.errors.title}</p>
-            ) : null}
-            <div className="div-horizontal">
-              <label>Description:</label>
-              <Input.TextArea
-                id="description"
+        <Form
+          style={{
+            height: "100%",
+            margin: "40px 80px",
+            padding: "20px 0",
+          }}
+        >
+          <Row>
+            <Col span={24}>
+              <Form.Item label="Title" name="title" labelCol={{ span: 4 }}>
+                <Input
+                  id="title"
+                  type="text"
+                  name="title"
+                  value={props.values.title}
+                  onBlur={props.handleBlur}
+                  onChange={props.handleChange}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col span={24}>
+              <Form.Item
+                label="Description"
                 name="description"
-                value={props.values.description}
-                onBlur={props.handleBlur}
-                onChange={props.handleChange}
-              />
-            </div>
-            {props.touched.description && props.errors.description ? (
-              <p style={{ color: "red" }}>{props.errors.description}</p>
-            ) : null}
+                labelCol={{ span: 4 }}
+                // wrapperCol={{ span: 24 }}
+              >
+                <Input.TextArea
+                  id="description"
+                  name="description"
+                  value={props.values.description}
+                  onBlur={props.handleBlur}
+                  onChange={props.handleChange}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-            <div className="div-horizontal">
-              <div className="div-vertical">
-                <div className="div-horizontal">
-                  <label>Due Date:</label>
-                  <DatePicker
-                    className="dueDate"
-                    onChange={(date) => setDate(date)}
-                    onBlur={props.handleBlur}
-                    name="dueDate"
-                    value={date}
-                  />
-                </div>
-                {props.touched.dueDate && props.errors.dueDate ? (
-                  <p style={{ color: "red" }}>{props.errors.dueDate}</p>
-                ) : null}
-                <div className="div-horizontal">
-                  <label>Priority:</label>
-                  <Select
-                    className="priority"
-                    name="priority"
-                    placeholder="Priority"
-                    onBlur={props.handleBlur}
-                    value={selectOption}
-                    onChange={(option) => {
-                      handleSelectChange(option);
-                    }}
-                    clearIcon
-                    options={selectOptions}
-                  ></Select>
-                </div>
-                {props.touched.priority && props.errors.priority ? (
-                  <p style={{ color: "red" }}>{props.errors.priority}</p>
-                ) : null}
-              </div>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="dueDate"
+                label="Due Date"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 12 }}
+              >
+                <DatePicker
+                  className="dueDate"
+                  onChange={(date) => setDate(date)}
+                  onBlur={props.handleBlur}
+                  name="dueDate"
+                  value={date}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="priority"
+                label="Priority"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 12 }}
+              >
+                <Select
+                  className="priority"
+                  name="priority"
+                  placeholder="Priority"
+                  onBlur={props.handleBlur}
+                  value={selectOption}
+                  onChange={(option) => {
+                    handleSelectChange(option);
+                  }}
+                  clearIcon
+                  options={selectOptions}
+                ></Select>
+              </Form.Item>
+            </Col>
+          </Row>
 
-              <div className="div-vertical">
-                <div className="div-horizontal">
-                  <label>Type:</label>
-                  <Radio.Group
-                    className="type"
-                    values={props.values.type}
-                    onChange={props.handleChange}
-                    name="type"
-                  >
-                    <Radio value={1}>Task</Radio>
-                    <Radio value={2}>Story</Radio>
-                    <Radio value={3}>Bug</Radio>
-                  </Radio.Group>
-                </div>
-                {props.touched.type && props.errors.type ? (
-                  <p style={{ color: "red" }}>{props.errors.type}</p>
-                ) : null}
+          <Row>
+            <Col span={12}>
+              <Form.Item
+                name="type"
+                label="Type"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 16 }}
+              >
+                <Radio.Group
+                  className="type"
+                  values={props.values.type}
+                  onChange={props.handleChange}
+                  name="type"
+                >
+                  <Radio value={1}>Task</Radio>
+                  <Radio value={2}>Story</Radio>
+                  <Radio value={3}>Bug</Radio>
+                </Radio.Group>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="label"
+                label="Label"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 16 }}
+              >
+                <Checkbox.Group
+                  style={{ display: "flex", flexDirection: "column" }}
+                  className="box"
+                  options={options}
+                  onChange={props.handleChange}
+                  name="label"
+                  checked={props.values.label}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-                <div className="div-horizontal">
-                  <label>Label:</label>
-                  <Checkbox.Group
-                    style={{ display: "flex", flexDirection: "column" }}
-                    className="box"
-                    options={options}
-                    onChange={props.handleChange}
-                    name="label"
-                    checked={props.values.label}
-                  />
-                </div>
-                {props.touched.label && props.errors.label ? (
-                  <p style={{ color: "red" }}>{props.errors.label}</p>
-                ) : null}
-              </div>
-            </div>
-
-            <div className="div-btn">
-              <SubmitButton className="btn">Submit</SubmitButton>
-              <ResetButton className="btn">Reset</ResetButton>
-            </div>
-          </Form>
-        </div>
+          <div className="div-btn">
+            <SubmitButton className="btn">Submit</SubmitButton>
+            <ResetButton className="btn">Reset</ResetButton>
+          </div>
+        </Form>
       )}
     </Formik>
   );

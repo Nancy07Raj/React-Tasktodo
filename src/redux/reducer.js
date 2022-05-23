@@ -1,7 +1,7 @@
 const initialState = {
   fetchdata: [],
   editData: "",
-  userInfo: "",
+  userInfom: "",
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,7 +19,7 @@ const reducer = (state = initialState, action) => {
     case "User_Info":
       return {
         ...state,
-        userInfo: action.payload,
+        userInfom: action.payload,
       };
     case "Logout":
       return {

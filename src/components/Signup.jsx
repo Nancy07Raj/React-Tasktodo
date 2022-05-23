@@ -37,11 +37,13 @@ function Signup() {
     };
     fetch("https://task-management-rest-app.herokuapp.com/api/users", config)
       .then((res) => {
-        if(res.ok)
-        return res.json()
+        if (res.ok) return res.json();
         else {
-          message.error({content:"Check Your Input Credentials", duration:4})
-          return Promise.reject()
+          message.error({
+            content: "Check Your Input Credentials",
+            duration: 4,
+          });
+          return Promise.reject();
         }
       })
       .then((data) => {
@@ -49,8 +51,8 @@ function Signup() {
         message
           .success({ content: "Successfully Signup!", duration: 2 })
           .then(history.push("/login"));
-        })
-      }
+      });
+  }
 
   return (
     <Formik
@@ -70,17 +72,20 @@ function Signup() {
               onChange={props.handleChange}
               onBlur={props.handleBlur}
             />
-            {props.touched.fname && props.errors.fname?<p className="red">{props.errors.fname}</p>:null}
+            {props.touched.fname && props.errors.fname ? (
+              <p className="red">{props.errors.fname}</p>
+            ) : null}
             <Input
               placeholder="Last Name"
-              id="text"
               type="text"
               name="lname"
               value={props.values.lname}
               onChange={props.handleChange}
               onBlur={props.handleBlur}
             />
-            {props.touched.lname && props.errors.lname?<p className="red">{props.errors.lname}</p>:null}
+            {props.touched.lname && props.errors.lname ? (
+              <p className="red">{props.errors.lname}</p>
+            ) : null}
             <Input
               placeholder="Email ID"
               id="text"
@@ -90,7 +95,9 @@ function Signup() {
               onChange={props.handleChange}
               onBlur={props.handleBlur}
             />
-            {props.touched.email && props.errors.email?<p className="red">{props.errors.email}</p>:null}
+            {props.touched.email && props.errors.email ? (
+              <p className="red">{props.errors.email}</p>
+            ) : null}
             <Input
               placeholder="Password"
               type="password"
@@ -100,7 +107,9 @@ function Signup() {
               onChange={props.handleChange}
               onBlur={props.handleBlur}
             />
-            {props.touched.pwd && props.errors.pwd?<p className="red">{props.errors.pwd}</p>:null}
+            {props.touched.pwd && props.errors.pwd ? (
+              <p className="red">{props.errors.pwd}</p>
+            ) : null}
             <Space direction="horizontal">
               <SubmitButton className="btn">Submit</SubmitButton>
               <ResetButton className="btn">Reset</ResetButton>

@@ -3,12 +3,12 @@ import { message } from "antd";
 import store from "./store";
 
 // const accessToken = store.getState().userInfo.accessToken;
-const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+const userInfom = JSON.parse(localStorage.getItem("userInfom"));
 
 let config = {
   headers: {
     "Content-type": "application/json",
-    Authorization: userInfo.accessToken,
+    Authorization: userInfom?.accessToken,
   },
 };
 
@@ -23,8 +23,8 @@ export const login = (data) => {
         loginconfig
       )
       .then((res) => {
-        console.log(store.getState().userInfo);
-        localStorage.setItem('userInfo',JSON.stringify(res.data.data));
+        console.log(store.getState().userInfom);
+        localStorage.setItem("userInfom", JSON.stringify(res?.data?.data));
         dispatch(userInfo(res.data.data));
         message.success({ content: "Logged In", duration: 2 });
       })
