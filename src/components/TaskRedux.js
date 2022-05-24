@@ -121,8 +121,6 @@ function TaskRedux(props) {
                   id="title"
                   type="text"
                   name="title"
-                  value={props.values.title}
-                  onBlur={props.handleBlur}
                   onChange={props.handleChange}
                 />
               </Form.Item>
@@ -140,8 +138,6 @@ function TaskRedux(props) {
                 <Input.TextArea
                   id="description"
                   name="description"
-                  value={props.values.description}
-                  onBlur={props.handleBlur}
                   onChange={props.handleChange}
                 />
               </Form.Item>
@@ -159,7 +155,6 @@ function TaskRedux(props) {
                 <DatePicker
                   className="dueDate"
                   onChange={(date) => setDate(date)}
-                  onBlur={props.handleBlur}
                   name="dueDate"
                   value={date}
                 />
@@ -176,8 +171,6 @@ function TaskRedux(props) {
                   className="priority"
                   name="priority"
                   placeholder="Priority"
-                  onBlur={props.handleBlur}
-                  value={selectOption}
                   onChange={(option) => {
                     handleSelectChange(option);
                   }}

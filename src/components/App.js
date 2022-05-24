@@ -9,6 +9,7 @@ import Logout from "./Logout";
 import TaskRedux from "./TaskRedux";
 import ReduxTaskList from "./ReduxTaskList";
 import ReactTable from "./ReactTable";
+import RegistrationForm from "./RegistrationForm";
 import { Layout, Menu } from "antd";
 import "antd/dist/antd.css";
 import { useSelector } from "react-redux";
@@ -46,6 +47,9 @@ function App() {
               <Menu.Item key="8">
                 <Link to="/reacttable">React-Table</Link>
               </Menu.Item>
+              <Menu.Item key="9">
+                <Link to="/regform">RegistrationForm</Link>
+              </Menu.Item>
               <Menu.Item key="7">
                 <Link to="/logout">Logout</Link>
               </Menu.Item>
@@ -62,6 +66,7 @@ function App() {
             <Route path="/reacttable" component={ReactTable} />
             <Route path="/taskredux/:Id?" component={TaskRedux} />
             <Route path="/tasklistredux" component={ReduxTaskList} />
+            <Route path="/regform" component={RegistrationForm} />
           </Switch>
         </Content>
       </Router>
