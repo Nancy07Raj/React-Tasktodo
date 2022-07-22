@@ -7,21 +7,19 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../redux/actionType';
 import styled from 'styled-components';
-// import '../Home.css';
 import '../TaskStyle.css';
 
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	min-width: 700px;
 	margin: 50px 0;
 `;
 
 const ButtonContainer = styled.div`
 	display: flex;
 	margin: 30px 100px;
-	justify-content: space-around;
+	justify-content: space-between;
 `;
 
 function Login() {
@@ -59,21 +57,17 @@ function Login() {
 				<Form
 					style={{
 						display: 'flex',
-						// height: '88vh',
-						margin: '40px 100px',
-						padding: '20px 0',
+						width: '600px',
+						margin: '40px 250px',
+						padding: '20px',
 						justifyContent: 'center',
+						alignItems: 'center',
 					}}
 				>
 					<Container>
 						<Row gutter={[32, 32]} justifyContent="space-between">
 							<Col span={24}>
-								<Form.Item
-									name="email"
-									label="Email"
-									labelCol={{ span: 6 }}
-									wrapperCol={{ span: 12 }}
-								>
+								<Form.Item name="email">
 									<Input
 										placeholder="Email"
 										name="email"
@@ -83,12 +77,7 @@ function Login() {
 								</Form.Item>
 							</Col>
 							<Col span={24}>
-								<Form.Item
-									name="pwd"
-									label="Password"
-									labelCol={{ span: 6 }}
-									wrapperCol={{ span: 12 }}
-								>
+								<Form.Item name="pwd">
 									<Input
 										placeholder="Password"
 										name="pwd"
