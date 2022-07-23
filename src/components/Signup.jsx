@@ -83,7 +83,7 @@ function Signup() {
 					<div className="form">
 						<Form
 							style={{
-								padding: '20px 130px',
+								padding: '40px 130px',
 								minHeight: '400px',
 								display: 'flex',
 								flexDirection: 'column',
